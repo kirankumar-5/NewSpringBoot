@@ -1,0 +1,48 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+
+group = 'com.new'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',  
+        	'Implementation-Version': version,
+        	'Main-Class': 'com.example.demo.NewSpringBoootApplication'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	compile group: 'org.hibernate', name: 'hibernate-entitymanager', version: '5.4.2.Final'
+	compile group: 'org.hibernate.javax.persistence', name: 'hibernate-jpa-2.1-api', version: '1.0.0.Final'
+	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-jdbc', version: '2.2.1.RELEASE'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.0.RELEASE'
+	compile group: 'org.springframework.data', name: 'spring-data-jpa', version: '2.2.0.RELEASE'
+	compile('javax.xml.bind:jaxb-api:2.3.0')
+	//compile group: 'org.springframework.hateoas', name: 'spring-hateoas', version: '0.25.0.RELEASE'
+	
+}
+
+repositories {
+	mavenCentral()
+}
+
+test {
+	useJUnitPlatform()
+}
+
+task module{
+
+}
